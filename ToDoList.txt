@@ -1,0 +1,56 @@
+Read MIPS code from textfile
+  - start by storing each instruction in an array or vector (Probably vector since we don't know how many lines will be in the textfile)
+  // reading a text file
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+vector<string> ReadFile(string file) {
+  string line;
+  vector<string> mipsVect;
+  ifstream myfile(file);
+  if (myfile.is_open()){
+    while(getline (myfile,line)){
+      mipsVect.push_back(line);
+    }
+    myfile.close();
+  }
+
+  else cout << "Unable to open file"; 
+
+  return mipsVect;
+}
+  
+Figure out what instructions 
+  - defined functions for each instruction
+
+
+Execute the MIPS file
+  - manage the main memory and cache
+  - figure out the loops
+    * if each instruction is stored in a array/vector, we can search through array/vector till loop name shows up and execute from that part of the array
+    * we could define which indices has labels to make jumping to them easier
+    
+Build Pipeline and Register figures
+  - we need to display this pipeline in some way that probably looks nice
+  
+
+
+Branch ideas
+ - create another vector for instructions between the label and the branch instruction
+ - make a function to call those instructions
+ - make a branch prediction function
+ - make a function that runs a while loop checking if the branch is correct
+ - might need function pointers
+ 
+ void loop(funct_ptr_instr, funct_ptr_branch)
+ 
+ 
+ loop:
+   addi $3, 1
+   loop2:
+     addi $2, 1
+   beq $2, 5
+ beq $3,6
+ loop

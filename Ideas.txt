@@ -1,0 +1,60 @@
+Maybe use array or to keep track of the registers
+// cycles for instructions
+const int INT_UNIT = 1;
+const int FP_ADDER = 2;
+const int FP_MULT = 10;
+const int FP_DIV = 40;
+
+const int MEM_LOC = 19; // use this to loop through memory
+const int REG_SIZE = 32;
+
+// instructions for each specific type
+const string FP_ADD_INSTR[2] = {"ADD.D", "SUB.D"};
+const string FP_MULT_INSTR[1] = {"MUL.D"};
+const string FP_DIV_INSTR[1] = {"DIV.D"};
+const string INT_UNIT_INSTR[11] = ("L.D", "S.D", "LI", "LW", "SW", 
+                                    "ADD", "ADDI", "SUB", "BEQ", "BNE", "J ADDR28"};
+
+
+
+
+class Pipeline{
+    public:
+    Pipeline();
+    ~Pipeline();
+    void ReadTextfile(string fileName);
+    float FPAdd(int source, int target);
+    int IntAdd(int source, int target);
+    float FPMult(int source, int target);
+    float FPDiv(int source, int target);
+    void Load(int dest, int source);
+    void Store(int dest, int source);
+    bool SearchCache(T data); // T will be a float or int
+    int SearchMemory(T data);
+    void LoadCache(T data);
+
+
+    private:
+    float m_fpReg[REG_SIZE]; // floating point reg
+    int m_intReg[REG_SIZE]; // integer reg
+    int m_mainMem[MEM_LOC]; // main memory
+
+};
+
+
+Pipeline::Pipeline(){
+    // initialize regs to 0 and main memory to default values
+    m_fpReg = {0.0};
+    m_intReg = {0};
+    m_mainMem = {45, 12, 0, 92, 10, 135, 254, 127, 18, 4, 55, 8, 2, 98, 13, 5, 233, 158, 167};
+}
+
+// check for F or $ then 
+/*
+if(symbol == 'F'){
+    bool val = SearchCache<float>(num);
+}
+if(symbol == '$'){
+    bool val = SearchCache<int>(num);
+}
+*/
