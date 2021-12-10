@@ -146,19 +146,111 @@ void Pipeline::GetFunction(vector<string> instr){
         fpReg[di] = FPDiv(s, t);
     }
     else if(instr.at(0) == "L.D"){
-
+        int offsetVals[3]; 
+        int offset;
+        int di = GetRegLoc(instr.at(1));
+        int data; 
+        GetOffset(instr, offsetVals);
+        if(offsetVals[1] == '$'){
+            int s = intReg[offsetVals[2]];
+            offset = offsetVals[0] + s;
+            
+        }
+        else if(offsetVals[1] == 'F'){
+            float s = fpReg[offsetVals[2]];
+            offset = offsetVals[0] + s;
+        }
+        else{
+            int s = offsetVals[2];
+            offset = offsetVals[0] + s;
+        }
+        offset = offset%MEM_LOC;
+        if(mainMem[offset].datatype == FP){
+            data = mainMem[offset].regData.floatPt.data_fp;
+        }
+        else{
+            data = mainMem[offset].regData.integer.data_int;
+        }
+        FPLoad(di, data);
     }
     else if(instr.at(0) == "S.D"){
-
+        int offsetVals[3]; 
+        int offset;
+        int si = GetRegLoc(instr.at(1));
+        int s = intReg[si];
+        int data; 
+        GetOffset(instr, offsetVals);
+        if(offsetVals[1] == '$'){
+            int d = intReg[offsetVals[2]];
+            offset = offsetVals[0] + d;
+        }
+        else if(offsetVals[1] == 'F'){
+            float d = fpReg[offsetVals[2]];
+            offset = offsetVals[0] + d;
+        }
+        else{
+            int d = offsetVals[2];
+            offset = offsetVals[0] + d;
+        }
+        offset = offset%MEM_LOC;
+        
+        FPLoad(offset, s);
     }
     else if(instr.at(0) == "LI"){
-
+        int di = GetRegLoc(instr.at(1));
+        int s = atoi(instr.at(2).c_str());
+        IntLoad(di, s);
     }
     else if(instr.at(0) == "LW"){
-
+        int offsetVals[3]; 
+        int offset;
+        int di = GetRegLoc(instr.at(1));
+        int data; 
+        GetOffset(instr, offsetVals);
+        if(offsetVals[1] == '$'){
+            int s = intReg[offsetVals[2]];
+            offset = offsetVals[0] + s;
+            
+        }
+        else if(offsetVals[1] == 'F'){
+            float s = fpReg[offsetVals[2]];
+            offset = offsetVals[0] + s;
+        }
+        else{
+            int s = offsetVals[2];
+            offset = offsetVals[0] + s;
+        }
+        offset = offset%MEM_LOC;
+        if(mainMem[offset].datatype == FP){
+            data = mainMem[offset].regData.floatPt.data_fp;
+        }
+        else{
+            data = mainMem[offset].regData.integer.data_int;
+        }
+        IntLoad(di, data);
     }
     else if(instr.at(0) == "SW"){
-
+        int offsetVals[3]; 
+        int offset;
+        int si = GetRegLoc(instr.at(1));
+        int s = intReg[si];
+        int data; 
+        GetOffset(instr, offsetVals);
+        if(offsetVals[1] == '$'){
+            int d = intReg[offsetVals[2]];
+            offset = offsetVals[0] + d;
+        }
+        else if(offsetVals[1] == 'F'){
+            float d = fpReg[offsetVals[2]];
+            offset = offsetVals[0] + d;
+        }
+        else{
+            int d = offsetVals[2];
+            offset = offsetVals[0] + d;
+        }
+        offset = offset%MEM_LOC;
+        
+        IntLoad(offset, s);
     }
     else if(instr.at(0) == "ADD"){
         int di = GetRegLoc(instr.at(1));
@@ -191,7 +283,7 @@ void Pipeline::GetFunction(vector<string> instr){
         intReg[di] = IntSub(s, t);
     }
     else if(instr.at(0) == "BEQ"){
-
+        
     }
     else if(instr.at(0) == "BNE"){
 

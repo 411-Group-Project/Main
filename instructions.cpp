@@ -83,7 +83,8 @@ void FPStore(int dest, float source){
            float source - the number to store
     Output: none
     */
-   fpReg[dest] = source;
+   mainMem[dest].datatype = FP;
+   mainMem[dest].regData.floatPt.data_fp = source;
 }
 void IntLoad(int dest, int source){
     /*
@@ -101,7 +102,8 @@ void IntStore(int dest, int source){
            int source - the number to store
     Output: none
     */
-   intReg[dest] = source;
+   mainMem[dest].datatype = INT;
+   mainMem[dest].regData.integer.data_int = source;
 }
 int BranchEqual(int source, int target, int size, string branch){
     /*
