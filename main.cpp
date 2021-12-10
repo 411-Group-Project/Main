@@ -1,5 +1,5 @@
 #include "file_conversions.h"
-extern vector<string>* arr2;
+//extern vector<string>* arr2; //use it when it needed later
 int main(int argc, char *argv[]){
     string file;
     if(argv[1]){
@@ -9,10 +9,9 @@ int main(int argc, char *argv[]){
         file = "input.txt";
     }
     int numLines = FileSize(file);
-    string arr[numLines]; 
+    string *arr = new string[numLines]; 
     ReadFile(numLines, file, arr);
-    vector<string> arr2[numLines]; 
     ParseInstr(arr, numLines);
-
+    delete []arr;
     return 0;
 }
