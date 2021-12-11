@@ -1,0 +1,5 @@
+.vscode/
+file_conversions.o
+instructions.o
+main.o
+pipeline.o

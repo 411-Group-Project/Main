@@ -58,7 +58,7 @@ float FPMult(float source, float target){
     */
    return source * target;
 }
-float FPDiv(int source, int target){
+float FPDiv(float source, float target){
     /*
     Desc: does floating point division
     Param: float source - number to divide from

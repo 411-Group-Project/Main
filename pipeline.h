@@ -15,13 +15,13 @@ class Pipeline{
     // int functions
     bool SearchCache(int data);
     int SearchMemory(int data);
-    void LoadCache(int data, int index = 0);
+    void LoadCache(int data, int index);
     // overloaded float functions
     bool SearchCache(float data);
     int SearchMemory(float data);
-    void LoadCache(float data, int index = 0);
+    void LoadCache(float data, int index);
 
-    void GetFunction(vector<string> instr);
+    void GetFunction(vector<string> instr, int& index);
 
     protected:
 };

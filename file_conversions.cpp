@@ -39,6 +39,9 @@ void ReadFile(int numLine, string file, string* instrArr){
             instrArr[i] = line;
             i++;
         }
+        for (int i = 0; i < numLine; i++){
+            cout << instrArr[i]<<endl;
+        }
         myfile.close();
     }
     else{ 
@@ -54,26 +57,39 @@ void ParseInstr(string* instrArr, int arrSize){
            vector<string>** parsedInstrArr - array of vectors
     Output: none
     */
-    vector<string> parsedInstrArr[arrSize];
+   
+    //vector<string> *parsedInstrArr = new vector<string>(arrSize);
+
+    //I used 2-D vector instead because the size of parsedInstrArr is unknown
+    //vector<vector<string> > parsedInstrArr; // made it global variable
     for(int i = 0; i < arrSize; i++){ // size of array for each instruction
-        RemoveCommas(instrArr[i]); 
-        RemoveColon(instrArr[i]);
-        parsedInstrArr[i] = split(instrArr[i], " "); // stores vector and index i of array
+       parsedInstrArr.push_back(Split(instrArr[i])); 
+       // RemoveColon(instrArr[i]);
+       // parsedInstrArr[i] = split(instrArr[i], " "); // stores vector and index i of array
+
+    }
+    //this is for testing to see if parsedInstrArr contains correct values
+    cout <<"vector: "<<endl;
+    for (unsigned int i = 0; i < parsedInstrArr.size(); i++) {
+        for(unsigned int j = 0; j < parsedInstrArr[i].size(); j++){
+            cout <<parsedInstrArr[i][j] << endl;
+        }
+        cout << endl;
     }
 }
 
-vector<string> split(string s, string delimiter) {
+//vector<string> Split(string s, string delimiter) {
     /*
     Desc: parses string based on delimiter
     Param: string s - the string to be parsed
            string delimiter - the delimiter to split the string by
     Output: a vector of the parsed string
     */
+   /*
     size_t posStart = 0; // start of substring
     size_t posEnd, delimLen = delimiter.length(); //end of substring
     string token; // substring before delimiter
-    vector<string> res; // vector hold they substrings
-
+    vector<string> res; // vector hold the substrings
     while ((posEnd = s.find(delimiter, posStart)) != string::npos){ // find the delimiter
         token = s.substr(posStart, posEnd - posStart);
         posStart = posEnd + delimLen; // new start posistion after delimter
@@ -81,35 +97,59 @@ vector<string> split(string s, string delimiter) {
     }
 
     res.push_back(s.substr(posStart)); // last substring
+    for (int i = 0; i < res.size(); i++){
+        cout<<"\n"<<res.at(i)<<" ";
+    }
     return res;
 }
-
-void RemoveCommas(string& instr){
+*/
+vector<string> Split(string& instr){
     /*
     Desc: This function removes the commas in a string and replaces
           them with spaces
     Param: string& instr - the string with the commas
     Output: none
     */
+   string delimiter = " ";
+   size_t posStart = 0; // start of substring
+   size_t posEnd, delimLen = delimiter.length(); //end of substring
+   string token; // substring before delimiter
+   vector<string> res; // vector hold the substrings
+
     for(int i = 0; i < instr.size(); i++){ // goes through each index of string
         if(instr[i] == ','){
             instr.erase(instr.begin() + i); // deletes comma
         }
+        if (instr[i] == ':'){
+            instr.erase(instr.begin() + i); // deletes colon
+            res.push_back(instr);
+            return res;
+        }
     }
+     while ((posEnd = instr.find(delimiter, posStart)) != string::npos){ // find the delimiter
+        token = instr.substr(posStart, posEnd - posStart);
+        posStart = posEnd + delimLen; // new start posistion after delimter
+        res.push_back(token);
+    }
+
+    res.push_back(instr.substr(posStart)); // last substring
+    return res;
 }
 
-void RemoveColon(string& instr){
+
+ //void RemoveColon(string& instr){
     /*
     Desc: This function removes the colons in a string 
     Param: string& instr - the string with the colons
     Output: none
     */
-    for(int i = 0; i < instr.size(); i++){ // goes through each index of string
-        if(instr[i] == ':'){
-            instr.erase(instr.begin() + i); // deletes colon
-        }
-    }
-}
+   // for(int i = 0; i < instr.size(); i++){ // goes through each index of string
+  //      if(instr[i] == ':'){
+  //          instr.erase(instr.begin() + i); // deletes colon
+   //     }
+   // }
+//}
+
 
 int* GetOffset(vector<string> instr, int offsetArray[]){
     /*
@@ -168,3 +208,45 @@ int GetRegLoc(string reg){
 
    return atoi(reg.substr(1).c_str());
 }
+
+void SetMemory(){
+    // set up int and fp regs
+    for(int i = 0; i < REG_SIZE; i++){
+        intReg[i] = 0;
+        fpReg[i] = 0;
+    }
+    
+    // initializes the cache
+    for(int i = 0; i < CACHE_DIM; i++){
+        cache[i].datatype = INT;
+        cache[i].regData.integer.index = -1;
+        cache[i].regData.integer.data_int = -1;
+    }
+
+    // initializes main memory
+    for(int i = 0; i < MEM_LOC; i++){
+        mainMem[i].datatype = INT;
+        mainMem[i].regData.integer.index = i;
+    }
+    mainMem[0].regData.integer.data_int = 45;
+    mainMem[1].regData.integer.data_int = 12;
+    mainMem[2].regData.integer.data_int = 0;
+    mainMem[3].regData.integer.data_int = 92;
+    mainMem[4].regData.integer.data_int = 10;
+    mainMem[5].regData.integer.data_int = 135;
+    mainMem[6].regData.integer.data_int = 254;
+    mainMem[7].regData.integer.data_int = 127;
+    mainMem[8].regData.integer.data_int = 18;
+    mainMem[9].regData.integer.data_int = 4;
+    mainMem[10].regData.integer.data_int = 55;
+    mainMem[11].regData.integer.data_int = 8;
+    mainMem[12].regData.integer.data_int = 2;
+    mainMem[13].regData.integer.data_int = 98;
+    mainMem[14].regData.integer.data_int = 13;
+    mainMem[15].regData.integer.data_int = 5;
+    mainMem[16].regData.integer.data_int = 233;
+    mainMem[17].regData.integer.data_int = 158;
+    mainMem[18].regData.integer.data_int = 167;
+    
+}
+
