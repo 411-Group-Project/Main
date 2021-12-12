@@ -1,25 +1,25 @@
 CXX= g++
-CXXFLAGS=-c -Wall -g -std=c++11
+CXXFLAGS= -Wall -g -std=c++11 -O0
 
-all:		proj
+all: proj
 
 clean:
-	@rm -f *.o proj
+	@rm -f *.o proj && echo "cleaning..."
 
 file_conversions.o: file_conversions.h file_conversions.cpp 
-	$(CXX) $(CXXFLAGS) file_conversions.cpp -o file_conversions.o
+	$(CXX) $(CXXFLAGS) -c file_conversions.cpp
 
 main.o: main.cpp
-	$(CXX) $(CXXFLAGS) main.cpp -o main.o
+	$(CXX) $(CXXFLAGS) -c main.cpp
 
 instructions.o: instructions.h instructions.cpp
-	$(CXX) $(CXXFLAGS) instructions.cpp -o instructions.o
+	$(CXX) $(CXXFLAGS) -c instructions.cpp
 
 pipeline.o: pipeline.h pipeline.cpp
-	$(CXX) $(CXXFLAGS) pipeline.cpp -o pipeline.o
+	$(CXX) $(CXXFLAGS) -c pipeline.cpp
 
-proj: file_conversions.o instructions.o pipeline.o main.o
-	$(CXX) file_conversions.o instructions.o pipeline.o main.o -o proj
+proj: file_conversions.o instructions.o pipeline.o main.cpp
+	$(CXX) $(CXXFLAGS) main.o file_conversions.o instructions.o pipeline.o -o proj
 
 gdb:
 	gdb ./proj

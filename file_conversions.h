@@ -25,15 +25,14 @@ const string FP_DIV_INSTR[1] = {"DIV.D"};
 const string INT_UNIT_INSTR[11] = {"L.D", "S.D", "LI", "LW", "SW", 
                                     "ADD", "ADDI", "SUB", "BEQ", "BNE", "J"};
 
-// global vars 
 typedef struct Array_t Array_t;
-extern vector<vector<string> > parsedInstrArr; // vector of instructions
-extern Array_t cache[CACHE_DIM]; 
+typedef enum dataType{INT,FP} dataType_t;
+
+extern vector<vector<string> > parsedInstrArr;
+extern Array_t cache[CACHE_DIM];
 extern Array_t mainMem[MEM_LOC];
 extern int intReg[REG_SIZE];
 extern float fpReg[REG_SIZE];
-
-typedef enum dataType{INT,FP} dataType_t;
 
 typedef struct Integer{
     int index;
@@ -52,14 +51,10 @@ typedef union number{
     FP_t floatPt;
 } num_t;
 
-
 struct Array_t {
     num_t regData; // union of the types of data
     dataType_t datatype; // integer or floating point
 };
-
-
-
 
 
 int FileSize(string file);

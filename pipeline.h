@@ -8,7 +8,6 @@
 using namespace std;
 
 #include "instructions.h"
-#include "file_conversions.h"
 
 class Pipeline{
     public:

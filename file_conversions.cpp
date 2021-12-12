@@ -210,6 +210,7 @@ int GetRegLoc(string reg){
 }
 
 void SetMemory(){
+
     // set up int and fp regs
     for(int i = 0; i < REG_SIZE; i++){
         intReg[i] = 0;
@@ -247,6 +248,5 @@ void SetMemory(){
     mainMem[16].regData.integer.data_int = 233;
     mainMem[17].regData.integer.data_int = 158;
     mainMem[18].regData.integer.data_int = 167;
-    
 }
 
