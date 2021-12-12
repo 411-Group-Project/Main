@@ -62,9 +62,9 @@ struct Array_t {
 int FileSize(string file);
 void ReadFile(int numLine, string file, string* instrArr);
 void ParseInstr(string* instrArr, int arrSize);
-vector<string> split (string s, string delimiter);
-void RemoveCommas(string& instr);
-void RemoveColon(string& instr);
+//vector<string> split (string s, string delimiter);
+vector<string> Split(string& instr);
+//void RemoveColon(string& instr);
 int* GetOffset(vector<string> instr, int offsetArray[]);
 void OffsetArray(string offsetString, int offsetArr[]);
 int GetRegLoc(string reg);
