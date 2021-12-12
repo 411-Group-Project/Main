@@ -61,7 +61,11 @@ void ParseInstr(string* instrArr, int arrSize){
     //vector<string> *parsedInstrArr = new vector<string>(arrSize);
 
     //I used 2-D vector instead because the size of parsedInstrArr is unknown
+<<<<<<< HEAD
     vector<vector<string>> parsedInstrArr;
+=======
+    //vector<vector<string> > parsedInstrArr; // made it global variable
+>>>>>>> fa2f34bf18210ce34df77ff49ef65c08858d6453
     for(int i = 0; i < arrSize; i++){ // size of array for each instruction
        parsedInstrArr.push_back(Split(instrArr[i])); 
        // RemoveColon(instrArr[i]);
@@ -125,12 +129,21 @@ vector<string> Split(string& instr){
             res.push_back(instr);
             return res;
         }
+<<<<<<< HEAD
     }
      while ((posEnd = instr.find(delimiter, posStart)) != string::npos){ // find the delimiter
         token = instr.substr(posStart, posEnd - posStart);
         posStart = posEnd + delimLen; // new start posistion after delimter
         res.push_back(token);
     }
+=======
+    }
+     while ((posEnd = instr.find(delimiter, posStart)) != string::npos){ // find the delimiter
+        token = instr.substr(posStart, posEnd - posStart);
+        posStart = posEnd + delimLen; // new start posistion after delimter
+        res.push_back(token);
+    }
+>>>>>>> fa2f34bf18210ce34df77ff49ef65c08858d6453
 
     res.push_back(instr.substr(posStart)); // last substring
     return res;
@@ -208,3 +221,45 @@ int GetRegLoc(string reg){
 
    return atoi(reg.substr(1).c_str());
 }
+
+void SetMemory(){
+
+    // set up int and fp regs
+    for(int i = 0; i < REG_SIZE; i++){
+        intReg[i] = 0;
+        fpReg[i] = 0;
+    }
+    
+    // initializes the cache
+    for(int i = 0; i < CACHE_DIM; i++){
+        cache[i].datatype = INT;
+        cache[i].regData.integer.index = -1;
+        cache[i].regData.integer.data_int = -1;
+    }
+
+    // initializes main memory
+    for(int i = 0; i < MEM_LOC; i++){
+        mainMem[i].datatype = INT;
+        mainMem[i].regData.integer.index = i;
+    }
+    mainMem[0].regData.integer.data_int = 45;
+    mainMem[1].regData.integer.data_int = 12;
+    mainMem[2].regData.integer.data_int = 0;
+    mainMem[3].regData.integer.data_int = 92;
+    mainMem[4].regData.integer.data_int = 10;
+    mainMem[5].regData.integer.data_int = 135;
+    mainMem[6].regData.integer.data_int = 254;
+    mainMem[7].regData.integer.data_int = 127;
+    mainMem[8].regData.integer.data_int = 18;
+    mainMem[9].regData.integer.data_int = 4;
+    mainMem[10].regData.integer.data_int = 55;
+    mainMem[11].regData.integer.data_int = 8;
+    mainMem[12].regData.integer.data_int = 2;
+    mainMem[13].regData.integer.data_int = 98;
+    mainMem[14].regData.integer.data_int = 13;
+    mainMem[15].regData.integer.data_int = 5;
+    mainMem[16].regData.integer.data_int = 233;
+    mainMem[17].regData.integer.data_int = 158;
+    mainMem[18].regData.integer.data_int = 167;
+}
+

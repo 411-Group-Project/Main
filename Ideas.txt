@@ -58,3 +58,8 @@ if(symbol == '$'){
     bool val = SearchCache<int>(num);
 }
 */
+
+
+
+0-18 -> 19 spots
+in order to find the right location do # mod 19
