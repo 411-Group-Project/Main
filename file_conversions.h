@@ -27,6 +27,7 @@ const string INT_UNIT_INSTR[11] = {"L.D", "S.D", "LI", "LW", "SW",
 
 typedef struct Array_t Array_t;
 typedef enum dataType{INT,FP} dataType_t;
+enum functOutVals{CONT=-1,HIT=-2, MISS=-3};
 
 extern vector<vector<string> > parsedInstrArr;
 extern Array_t cache[CACHE_DIM];

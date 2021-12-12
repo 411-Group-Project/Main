@@ -30,8 +30,11 @@ int main(int argc, char *argv[]){
             }catch(const char* error){
                 cout << error << endl;
             }
-            if(newIndex > -1){ //condition or jump needs to happen
+            if(newIndex > CONT){ //condition or jump needs to happen
                 i = newIndex;
+            }
+            else if(newIndex == MISS){
+                cout << "Add some stalls" << endl;
             }
         }
     }

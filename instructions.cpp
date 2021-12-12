@@ -4,11 +4,10 @@ NOTE TO SELF
 
 You want to only pass in the source and target into the function
 and return the operated value because you have to check cache for 
-diffrent values first, rather than just eailsy pull from a certain
+diffrent values first, rather than just easily pull from a certain
 register.
 
 if the conditions return -1, the condition failed
-if the condition return -2, throw exception
 
 */
 
@@ -122,7 +121,7 @@ int BranchEqual(int source, int target, int size, string branch){
         throw "Branch label does not exist!";
     }
 
-    return -1; // continue
+    return CONT; // continue
 }
 int BranchNotEqual(int source, int target, int size, string branch){
     /*
@@ -142,7 +141,7 @@ int BranchNotEqual(int source, int target, int size, string branch){
         throw "Branch label does not exist!";
     }
     
-    return -1; // continue 
+    return CONT; // continue 
 }
 int Jump(int size, string branch){
     /*
