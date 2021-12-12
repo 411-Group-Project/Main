@@ -104,7 +104,7 @@ void Pipeline::LoadCache(float data, int index){
     cache[i].regData.floatPt.index = index;
 }
 
-void Pipeline::GetFunction(vector<string> instr, int& index){
+int Pipeline::GetFunction(vector<string> instr){
     /*
     Desc: calls the different functions depending on instruction
     Param: vector<string> instr - instruction to be executed
@@ -123,6 +123,7 @@ void Pipeline::GetFunction(vector<string> instr, int& index){
         float t = fpReg[ti];
         
         fpReg[di] = FPAdd(s, t); // adds/stores values in dest reg
+        return -1;
     }
     else if(instr.at(0) == "SUB.D"){
         // finds the index of the FP regs to get values from
@@ -135,6 +136,7 @@ void Pipeline::GetFunction(vector<string> instr, int& index){
         float t = fpReg[ti];
         
         fpReg[di] = FPSub(s, t); // fp subtraction
+        return -1;
     }
     else if(instr.at(0) == "MUL.D"){
         // finds the index of the FP regs to get values from
@@ -147,6 +149,7 @@ void Pipeline::GetFunction(vector<string> instr, int& index){
         float t = fpReg[ti];
         
         fpReg[di] = FPMult(s, t); // fp multiplication
+        return -1;
     }
     else if(instr.at(0) == "DIV.D"){
         // finds the index of the FP regs to get values from
@@ -159,6 +162,7 @@ void Pipeline::GetFunction(vector<string> instr, int& index){
         float t = fpReg[ti];
         
         fpReg[di] = FPDiv(s, t); // fp division
+        return -1;
     }
     else if(instr.at(0) == "L.D"){
         int offsetVals[3]; // offset values
@@ -192,6 +196,7 @@ void Pipeline::GetFunction(vector<string> instr, int& index){
         }
 
         FPLoad(di, data);
+        return -1;
     }
     else if(instr.at(0) == "S.D"){
         int offsetVals[3]; // holds offset values
@@ -216,11 +221,13 @@ void Pipeline::GetFunction(vector<string> instr, int& index){
         offset = offset%MEM_LOC; // index for main mem
         
         FPStore(offset, s);
+        return -1;
     }
     else if(instr.at(0) == "LI"){
         int di = GetRegLoc(instr.at(1)); // dest index for reg to load into
         int s = atoi(instr.at(2).c_str()); // the immediate value to store
         IntLoad(di, s);
+        return -1;
     }
     else if(instr.at(0) == "LW"){
         int offsetVals[3]; // holds offset value
@@ -254,6 +261,7 @@ void Pipeline::GetFunction(vector<string> instr, int& index){
         }
 
         IntLoad(di, data);
+        return -1;
     }
     else if(instr.at(0) == "SW"){
         int offsetVals[3]; // array to hold offset values
@@ -280,6 +288,7 @@ void Pipeline::GetFunction(vector<string> instr, int& index){
         offset = offset%MEM_LOC; // get index for mainMem address
         
         IntStore(offset, s);
+        return -1;
     }
     else if(instr.at(0) == "ADD"){
         // finds the index of the int regs to get values from
@@ -292,6 +301,7 @@ void Pipeline::GetFunction(vector<string> instr, int& index){
         int t = intReg[ti];
 
         intReg[di] = IntAdd(s, t);
+        return -1;
     }
     else if(instr.at(0) == "ADDI"){
         // finds the index of the int regs to get values from
@@ -303,7 +313,7 @@ void Pipeline::GetFunction(vector<string> instr, int& index){
         int s = intReg[si]; // gets value from reg
 
         intReg[di] = IntAdd(s, t);
-
+        return -1;
     }
     else if(instr.at(0) == "SUB"){
         // finds the index of the int regs to get values from
@@ -315,7 +325,8 @@ void Pipeline::GetFunction(vector<string> instr, int& index){
         int s = intReg[si];
         int t = intReg[ti];
 
-        intReg[di] = IntSub(s, t); 
+        intReg[di] = IntSub(s, t);
+        return -1; 
     }
     else if(instr.at(0) == "BEQ"){
         // finds the index of the int regs to get values from
@@ -326,8 +337,7 @@ void Pipeline::GetFunction(vector<string> instr, int& index){
         // gets values from regs
         int s = intReg[si];
         int t = intReg[ti];
-        index = BranchEqual(s, t, parsedInstrArr.size(), branch); // gets new index to start at
-        
+        return BranchEqual(s, t, parsedInstrArr.size(), branch); // gets new index to start at   
     }
     else if(instr.at(0) == "BNE"){
         // finds the index of the int regs to get values from
@@ -338,14 +348,14 @@ void Pipeline::GetFunction(vector<string> instr, int& index){
         // gets values from regs
         int s = intReg[si];
         int t = intReg[ti];
-        index = BranchNotEqual(s, t, parsedInstrArr.size(), branch); // gets new index to start at
+        return BranchNotEqual(s, t, parsedInstrArr.size(), branch); // gets new index to start at
     }
     else if(instr.at(0) == "J"){
         string branch = instr.at(1); // gets branch name
-        index = Jump(parsedInstrArr.size(), branch); // gets new index to start at
+        return Jump(parsedInstrArr.size(), branch); // gets new index to start at
     }
 
-    
+    throw "Instruction does not exist!";
 }
 
 int IntTasks::FindVal(int index){

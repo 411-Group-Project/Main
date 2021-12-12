@@ -119,7 +119,7 @@ int BranchEqual(int source, int target, int size, string branch){
                 return i; // return index
             }
         }
-        return -2; // branch does not exist
+        throw "Branch label does not exist!";
     }
 
     return -1; // continue
@@ -139,7 +139,7 @@ int BranchNotEqual(int source, int target, int size, string branch){
                 return i; // returns index
             }
         }
-        return -2; // branch doesn't exist
+        throw "Branch label does not exist!";
     }
     
     return -1; // continue 
@@ -157,5 +157,5 @@ int Jump(int size, string branch){
             return i; // returns index
         }
     }
-    return -2; // branch doesn't exist
+    throw "Branch label does not exist!";
 }

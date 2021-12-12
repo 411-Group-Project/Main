@@ -20,7 +20,7 @@ class Pipeline{
     int SearchMemory(float data);
     void LoadCache(float data, int index);
 
-    void GetFunction(vector<string> instr, int& index);
+    int GetFunction(vector<string> instr);
 
     protected:
 };
