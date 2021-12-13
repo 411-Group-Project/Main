@@ -57,53 +57,13 @@ void ParseInstr(string* instrArr, int arrSize){
            vector<string>** parsedInstrArr - array of vectors
     Output: none
     */
-   
-    //vector<string> *parsedInstrArr = new vector<string>(arrSize);
-
-    //I used 2-D vector instead because the size of parsedInstrArr is unknown
-    //vector<vector<string> > parsedInstrArr; // made it global variable
     for(int i = 0; i < arrSize; i++){ // size of array for each instruction
        parsedInstrArr.push_back(Split(instrArr[i])); 
-       // RemoveColon(instrArr[i]);
-       // parsedInstrArr[i] = split(instrArr[i], " "); // stores vector and index i of array
-
     }
-    //this is for testing to see if parsedInstrArr contains correct values
     
-    for (int i = 0; i < parsedInstrArr.size(); i++){
-        cout << "Index: " << i << " Vector: <";
-        for (auto j : parsedInstrArr[i]){
-            cout << j << " ";
-        }    
-        cout << ">" << endl;
-    }
 }
 
-//vector<string> Split(string s, string delimiter) {
-    /*
-    Desc: parses string based on delimiter
-    Param: string s - the string to be parsed
-           string delimiter - the delimiter to split the string by
-    Output: a vector of the parsed string
-    */
-   /*
-    size_t posStart = 0; // start of substring
-    size_t posEnd, delimLen = delimiter.length(); //end of substring
-    string token; // substring before delimiter
-    vector<string> res; // vector hold the substrings
-    while ((posEnd = s.find(delimiter, posStart)) != string::npos){ // find the delimiter
-        token = s.substr(posStart, posEnd - posStart);
-        posStart = posEnd + delimLen; // new start posistion after delimter
-        res.push_back(token);
-    }
 
-    res.push_back(s.substr(posStart)); // last substring
-    for (int i = 0; i < res.size(); i++){
-        cout<<"\n"<<res.at(i)<<" ";
-    }
-    return res;
-}
-*/
 vector<string> Split(string& instr){
     /*
     Desc: This function removes the commas in a string and replaces
@@ -141,21 +101,6 @@ vector<string> Split(string& instr){
     res.push_back(instr.substr(posStart)); // last substring
     return res;
 }
-
-
- //void RemoveColon(string& instr){
-    /*
-    Desc: This function removes the colons in a string 
-    Param: string& instr - the string with the colons
-    Output: none
-    */
-   // for(int i = 0; i < instr.size(); i++){ // goes through each index of string
-  //      if(instr[i] == ':'){
-  //          instr.erase(instr.begin() + i); // deletes colon
-   //     }
-   // }
-//}
-
 
 int* GetOffset(vector<string> instr, int offsetArray[]){
     /*
@@ -216,6 +161,11 @@ int GetRegLoc(string reg){
 }
 
 void SetMemory(){
+    /*
+    Desc: sets up and initializes memory
+    Param: none
+    Output: none
+    */
 
     // set up int and fp regs
     for(int i = 0; i < REG_SIZE; i++){

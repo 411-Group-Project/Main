@@ -30,6 +30,7 @@ class Pipeline{
     
 
     int GetFunction(vector<string> instr);
+    int StartPipeline(vector<string> instr);
 
 };
 
