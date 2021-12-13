@@ -30,7 +30,6 @@ typedef enum dataType{INT,FP} dataType_t;
 enum functOutVals{CONT=-1,HIT=-2, MISS=-3};
 
 extern vector<vector<string> > parsedInstrArr;
-extern vector<vector<string> > pipelineVect;
 extern Array_t cache[CACHE_DIM];
 extern Array_t mainMem[MEM_LOC];
 extern int intReg[REG_SIZE];

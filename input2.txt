@@ -13,5 +13,4 @@ S.D F2,0($4)
 ADDI $2,$2,1
 ADDI $3,$3,1
 ADDI $4,$4,1
-ADDI $7,$7,1
 BNE $7,$1,Loop
