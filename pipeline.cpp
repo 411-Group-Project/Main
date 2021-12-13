@@ -259,6 +259,10 @@ int Pipeline::GetFunction(vector<string> instr){
     Param: vector<string> instr - instruction to be executed
     Output: number correspoing to index, hit, miss, or continue 
     */
+    vector<string> instrVect;
+    vector<string> prev;
+    int i = 0; // keep track of where decode starts
+    int k = 0; // keep track of where pipeline actually starts
     if(instr.at(0) == "ADD.D"){
         // finds the index of the FP regs to get values from
         int di = GetRegLoc(instr.at(1));
@@ -270,6 +274,41 @@ int Pipeline::GetFunction(vector<string> instr){
         float t = fpReg[ti];
         
         fpReg[di] = FPAdd(s, t); // adds/stores values in dest reg
+
+        // alignment
+        if(!pipelineVect.empty()){
+            prev = pipelineVect.back();
+            k = StartPipeline(prev);
+            while(prev[i] != "ID   "){
+                instrVect.push_back("     ");
+                i++;
+            }
+        }
+
+        instrVect.push_back("ADD.D");
+        instrVect.push_back("IF   ");
+        instrVect.push_back("ID   ");
+        instrVect.push_back("A1   ");
+        instrVect.push_back("A2   ");
+        instrVect.push_back("MEM  ");
+        instrVect.push_back("WB   ");
+        
+        for(int j = 0; j < prev.size(); j++){
+            if(prev[j] == "STALL"){
+                if(j > i){
+                    instrVect.insert(instrVect.begin() + j,"STALL");
+                }
+            }
+            if(prev[j] == "MEM  "){
+                if(prev[k] == "L.D" || prev[k] == "LW" || prev[k] == "S.D" || prev[k] == "SW"){
+                    if(j > i){
+                        instrVect.insert(instrVect.begin() + j,"STALL");
+                    }
+                }
+            }
+        }
+
+        pipelineVect.push_back(instrVect);
         return CONT;
     }
     else if(instr.at(0) == "SUB.D"){
@@ -283,6 +322,41 @@ int Pipeline::GetFunction(vector<string> instr){
         float t = fpReg[ti];
         
         fpReg[di] = FPSub(s, t); // fp subtraction
+
+        // alignment
+        if(!pipelineVect.empty()){
+            prev = pipelineVect.back();
+            k = StartPipeline(prev);
+            while(prev[i] != "ID   "){
+                instrVect.push_back("     ");
+                i++;
+            }
+        }
+
+        instrVect.push_back("SUB.D");
+        instrVect.push_back("IF   ");
+        instrVect.push_back("ID   ");
+        instrVect.push_back("A1   ");
+        instrVect.push_back("A2   ");
+        instrVect.push_back("MEM  ");
+        instrVect.push_back("WB   ");
+        
+        for(int j = 0; j < prev.size(); j++){
+            if(prev[j] == "STALL"){
+                if(j > i){
+                    instrVect.insert(instrVect.begin() + j,"STALL");
+                }
+            }
+            if(prev[j] == "MEM  "){
+                if(prev[k] == "L.D" || prev[k] == "LW" || prev[k] == "S.D" || prev[k] == "SW"){
+                    if(j > i){
+                        instrVect.insert(instrVect.begin() + j,"STALL");
+                    }
+                }
+            }
+        }
+
+        pipelineVect.push_back(instrVect);
         return CONT;
     }
     else if(instr.at(0) == "MUL.D"){
@@ -296,6 +370,44 @@ int Pipeline::GetFunction(vector<string> instr){
         float t = fpReg[ti];
         
         fpReg[di] = FPMult(s, t); // fp multiplication
+        
+        // alignment
+        if(!pipelineVect.empty()){
+            prev = pipelineVect.back();
+            k = StartPipeline(prev);
+            while(prev[i] != "ID   "){
+                instrVect.push_back("     ");
+                i++;
+            }
+        }
+        
+        instrVect.push_back("MUL.D");
+        instrVect.push_back("IF   ");
+        instrVect.push_back("ID   ");
+        instrVect.push_back("M1   ");
+        instrVect.push_back("M2   ");
+        instrVect.push_back("M3   ");
+        instrVect.push_back("...  ");
+        instrVect.push_back("M10  ");
+        instrVect.push_back("MEM  ");
+        instrVect.push_back("WB   ");
+        
+        for(int j = 0; j < prev.size(); j++){
+            if(prev[j] == "STALL"){
+                if(j > i){
+                    instrVect.insert(instrVect.begin() + j,"STALL");
+                }
+            }
+            if(prev[j] == "MEM  "){
+                if(prev[k] == "L.D" || prev[k] == "LW" || prev[k] == "S.D" || prev[k] == "SW"){
+                    if(j > i){
+                        instrVect.insert(instrVect.begin() + j,"STALL");
+                    }
+                }
+            }
+        }
+
+        pipelineVect.push_back(instrVect);
         return CONT;
     }
     else if(instr.at(0) == "DIV.D"){
@@ -309,6 +421,44 @@ int Pipeline::GetFunction(vector<string> instr){
         float t = fpReg[ti];
         
         fpReg[di] = FPDiv(s, t); // fp division
+        
+        // alignment
+        if(!pipelineVect.empty()){
+            prev = pipelineVect.back();
+            k = StartPipeline(prev);
+            while(prev[i] != "ID   "){
+                instrVect.push_back("     ");
+                i++;
+            }
+        }
+        
+        instrVect.push_back("DIV.D");
+        instrVect.push_back("IF   ");
+        instrVect.push_back("ID   ");
+        instrVect.push_back("D1   ");
+        instrVect.push_back("D2   ");
+        instrVect.push_back("D3   ");
+        instrVect.push_back("...  ");
+        instrVect.push_back("D40  ");
+        instrVect.push_back("MEM  ");
+        instrVect.push_back("WB   ");
+        
+        for(int j = 0; j < prev.size(); j++){
+            if(prev[j] == "STALL"){
+                if(j > i){
+                    instrVect.insert(instrVect.begin() + j,"STALL");
+                }
+            }
+            if(prev[j] == "MEM  "){
+                if(prev[k] == "L.D" || prev[k] == "LW" || prev[k] == "S.D" || prev[k] == "SW"){
+                    if(j > i){
+                        instrVect.insert(instrVect.begin() + j,"STALL");
+                    }
+                }
+            }
+        }
+
+        pipelineVect.push_back(instrVect);
         return CONT;
     }
     else if(instr.at(0) == "L.D"){
@@ -343,12 +493,48 @@ int Pipeline::GetFunction(vector<string> instr){
         }
         
         FPLoad(di, data);
+        
+        // alignment
+        if(!pipelineVect.empty()){
+            prev = pipelineVect.back();
+            k = StartPipeline(prev);
+            while(prev[i] != "ID   "){
+                instrVect.push_back("     ");
+                i++;
+            }
+        }
+        
+        instrVect.push_back("L.D");
+        instrVect.push_back("IF   ");
+        instrVect.push_back("ID   ");
+        instrVect.push_back("EX   ");
+        instrVect.push_back("MEM  ");
         // Search for hit/miss then loads cachie
-        if(SearchCache(data)){
-            return HIT;
+        if(!SearchCache(data)){
+            instrVect.push_back("MEM  ");
+            instrVect.push_back("MEM  ");
+           
         }
         LoadCache(data, offset);
-        return MISS;
+        instrVect.push_back("WB   ");
+        
+        for(int j = 0; j < prev.size(); j++){
+            if(prev[j] == "STALL"){
+                if(j > i){
+                    instrVect.insert(instrVect.begin() + j,"STALL");
+                }
+            }
+            if(prev[j] == "MEM  "){
+                if(prev[k] == "L.D" || prev[k] == "LW" || prev[k] == "S.D" || prev[k] == "SW"){
+                    if(j > i){
+                        instrVect.insert(instrVect.begin() + j,"STALL");
+                    }
+                }
+            }
+        }
+
+        pipelineVect.push_back(instrVect);
+        return CONT;
     }
     else if(instr.at(0) == "S.D"){
         int offsetVals[3]; // holds offset values
@@ -373,18 +559,86 @@ int Pipeline::GetFunction(vector<string> instr){
         offset = offset%MEM_LOC; // index for main mem
         
         FPStore(offset, s);
-
-        // Search for hit/miss then loads cache
-        if(SearchCache(s)){
-            return HIT;
+        
+        // alignment
+        if(!pipelineVect.empty()){
+            prev = pipelineVect.back();
+            k = StartPipeline(prev);
+            while(prev[i] != "ID   "){
+                instrVect.push_back("     ");
+                i++;
+            }
         }
+        
+        instrVect.push_back("S.D");
+        instrVect.push_back("IF   ");
+        instrVect.push_back("ID   ");
+        instrVect.push_back("EX   ");
+        instrVect.push_back("MEM  ");
+        // Search for hit/miss then loads cache
+        if(!SearchCache(s)){
+            instrVect.push_back("MEM  ");
+            instrVect.push_back("MEM  ");
+        }
+        instrVect.push_back("WB   ");
+        
+        for(int j = 0; j < prev.size(); j++){
+            if(prev[j] == "STALL"){
+                if(j > i){
+                    instrVect.insert(instrVect.begin() + j,"STALL");
+                }
+            }
+            if(prev[j] == "MEM  "){
+                if(prev[k] == "L.D" || prev[k] == "LW" || prev[k] == "S.D" || prev[k] == "SW"){
+                    if(j > i){
+                        instrVect.insert(instrVect.begin() + j,"STALL");
+                    }
+                }
+            }
+        }
+
+        pipelineVect.push_back(instrVect);
         LoadCache(s, offset);
-        return MISS;
+        return CONT;
     }
     else if(instr.at(0) == "LI"){
         int di = GetRegLoc(instr.at(1)); // dest index for reg to load into
         int s = atoi(instr.at(2).c_str()); // the immediate value to store
         IntLoad(di, s);
+        
+        // alignment
+        if(!pipelineVect.empty()){
+            prev = pipelineVect.back();
+            k = StartPipeline(prev);
+            while(prev[i] != "ID   "){
+                instrVect.push_back("     ");
+                i++;
+            }
+        }
+        
+        instrVect.push_back("LI");
+        instrVect.push_back("IF   ");
+        instrVect.push_back("ID   ");
+        instrVect.push_back("EX   ");
+        instrVect.push_back("MEM  ");
+        instrVect.push_back("WB   ");
+        
+        for(int j = 0; j < prev.size(); j++){
+            if(prev[j] == "STALL"){
+                if(j > i){
+                    instrVect.insert(instrVect.begin() + j,"STALL");
+                }
+            }
+            if(prev[j] == "MEM  "){
+                if(prev[k] == "L.D" || prev[k] == "LW" || prev[k] == "S.D" || prev[k] == "SW"){
+                    if(j > i){
+                        instrVect.insert(instrVect.begin() + j,"STALL");
+                    }
+                }
+            }
+        }
+
+        pipelineVect.push_back(instrVect);
         return CONT;
     }
     else if(instr.at(0) == "LW"){
@@ -419,13 +673,47 @@ int Pipeline::GetFunction(vector<string> instr){
         }
 
         IntLoad(di, data);
-
-        // Search for hit/miss then loads cache
-        if(SearchCache(data)){
-            return HIT;
+        
+        // alignment
+        if(!pipelineVect.empty()){
+            prev = pipelineVect.back();
+            k = StartPipeline(prev);
+            while(prev[i] != "ID   "){
+                instrVect.push_back("     ");
+                i++;
+            }
         }
+        
+        instrVect.push_back("LW");
+        instrVect.push_back("IF   ");
+        instrVect.push_back("ID   ");
+        instrVect.push_back("EX   ");
+        instrVect.push_back("MEM  ");
+        // Search for hit/miss then loads cache
+        if(!SearchCache(data)){
+            instrVect.push_back("MEM  ");
+            instrVect.push_back("MEM  ");
+        }
+        instrVect.push_back("WB   ");
+        
+        for(int j = 0; j < prev.size(); j++){
+            if(prev[j] == "STALL"){
+                if(j > i){
+                    instrVect.insert(instrVect.begin() + j,"STALL");
+                }
+            }
+            if(prev[j] == "MEM  "){
+                if(prev[k] == "L.D" || prev[k] == "LW" || prev[k] == "S.D" || prev[k] == "SW"){
+                    if(j > i){
+                        instrVect.insert(instrVect.begin() + j,"STALL");
+                    }
+                }
+            }
+        }
+
+        pipelineVect.push_back(instrVect);
         LoadCache(data, offset);
-        return MISS;
+        return CONT;
     }
     else if(instr.at(0) == "SW"){
         int offsetVals[3]; // array to hold offset values
@@ -452,13 +740,48 @@ int Pipeline::GetFunction(vector<string> instr){
         offset = offset%MEM_LOC; // get index for mainMem address
         
         IntStore(offset, s);
-
-        // Search for hit/miss then loads cache
-        if(SearchCache(s)){
-            return HIT;
+        
+        // alignment
+        if(!pipelineVect.empty()){
+            prev = pipelineVect.back();
+            k = StartPipeline(prev);
+            while(prev[i] != "ID   "){
+                instrVect.push_back("     ");
+                i++;
+            }
         }
+        
+        instrVect.push_back("SW");
+        instrVect.push_back("IF   ");
+        instrVect.push_back("ID   ");
+        instrVect.push_back("EX   ");
+        instrVect.push_back("MEM  ");
+        // Search for hit/miss then loads cache
+        if(!SearchCache(s)){
+            instrVect.push_back("MEM  ");
+            instrVect.push_back("MEM  ");
+           
+        }
+        instrVect.push_back("WB   ");
+        
+        for(int j = 0; j < prev.size(); j++){
+            if(prev[j] == "STALL"){
+                if(j > i){
+                    instrVect.insert(instrVect.begin() + j,"STALL");
+                 }
+            }
+            if(prev[j] == "MEM  "){
+                if(prev[k] == "L.D" || prev[k] == "LW" || prev[k] == "S.D" || prev[k] == "SW"){
+                    if(j > i){
+                        instrVect.insert(instrVect.begin() + j,"STALL");
+                    }
+                }
+            }
+        }
+
+        pipelineVect.push_back(instrVect);
         LoadCache(s, offset);
-        return MISS;
+        return CONT;
     }
     else if(instr.at(0) == "ADD"){
         // finds the index of the int regs to get values from
@@ -471,6 +794,40 @@ int Pipeline::GetFunction(vector<string> instr){
         int t = intReg[ti];
 
         intReg[di] = IntAdd(s, t);
+        
+        // alignment
+        if(!pipelineVect.empty()){
+            prev = pipelineVect.back();
+            k = StartPipeline(prev);
+            while(prev[i] != "ID   "){
+                instrVect.push_back("     ");
+                i++;
+            }
+        }
+        
+        instrVect.push_back("ADD");
+        instrVect.push_back("IF   ");
+        instrVect.push_back("ID   ");
+        instrVect.push_back("EX   ");
+        instrVect.push_back("MEM  ");
+        instrVect.push_back("WB   ");
+        
+        for(int j = 0; j < prev.size(); j++){
+            if(prev[j] == "STALL"){
+                if(j > i){
+                    instrVect.insert(instrVect.begin() + j,"STALL");
+                }
+            }
+            if(prev[j] == "MEM  "){
+                if(prev[k] == "L.D" || prev[k] == "LW" || prev[k] == "S.D" || prev[k] == "SW"){
+                    if(j > i){
+                        instrVect.insert(instrVect.begin() + j,"STALL");
+                    }
+                }
+            }
+        }
+
+        pipelineVect.push_back(instrVect);
         return CONT;
     }
     else if(instr.at(0) == "ADDI"){
@@ -483,6 +840,40 @@ int Pipeline::GetFunction(vector<string> instr){
         int s = intReg[si]; // gets value from reg
 
         intReg[di] = IntAdd(s, t);
+        
+        // alignment
+        if(!pipelineVect.empty()){
+            prev = pipelineVect.back();
+            k = StartPipeline(prev);
+            while(prev[i] != "ID   "){
+                instrVect.push_back("     ");
+                i++;
+            }
+        }
+        
+        instrVect.push_back("ADDI");
+        instrVect.push_back("IF   ");
+        instrVect.push_back("ID   ");
+        instrVect.push_back("EX   ");
+        instrVect.push_back("MEM  ");
+        instrVect.push_back("WB   ");
+        
+        for(int j = 0; j < prev.size(); j++){
+            if(prev[j] == "STALL"){
+                if(j > i){
+                    instrVect.insert(instrVect.begin() + j,"STALL");
+                }
+            }
+            if(prev[j] == "MEM  "){
+                if(prev[k] == "L.D" || prev[k] == "LW" || prev[k] == "S.D" || prev[k] == "SW"){
+                    if(j > i){
+                        instrVect.insert(instrVect.begin() + j,"STALL");
+                    }
+                }
+            }
+        }
+
+        pipelineVect.push_back(instrVect);
         return CONT;
     }
     else if(instr.at(0) == "SUB"){
@@ -496,6 +887,40 @@ int Pipeline::GetFunction(vector<string> instr){
         int t = intReg[ti];
 
         intReg[di] = IntSub(s, t);
+        
+        // alignment
+        if(!pipelineVect.empty()){
+            prev = pipelineVect.back();
+            k = StartPipeline(prev);
+            while(prev[i] != "ID   "){
+                instrVect.push_back("     ");
+                i++;
+            }
+        }
+        
+        instrVect.push_back("SUB");
+        instrVect.push_back("IF   ");
+        instrVect.push_back("ID   ");
+        instrVect.push_back("EX   ");
+        instrVect.push_back("MEM  ");
+        instrVect.push_back("WB   ");
+        
+        for(int j = 0; j < prev.size(); j++){
+            if(prev[j] == "STALL"){
+                if(j > i){
+                    instrVect.insert(instrVect.begin() + j,"STALL");
+                }
+            }
+            if(prev[j] == "MEM  "){
+                if(prev[k] == "L.D" || prev[k] == "LW" || prev[k] == "S.D" || prev[k] == "SW"){
+                    if(j > i){
+                        instrVect.insert(instrVect.begin() + j,"STALL");
+                    }
+                }
+            }
+        }
+
+        pipelineVect.push_back(instrVect);
         return CONT; 
     }
     else if(instr.at(0) == "BEQ"){
@@ -507,6 +932,38 @@ int Pipeline::GetFunction(vector<string> instr){
         // gets values from regs
         int s = intReg[si];
         int t = intReg[ti];
+        
+        // alignment
+        if(!pipelineVect.empty()){
+            prev = pipelineVect.back();
+            k = StartPipeline(prev);
+            while(prev[i] != "ID   "){
+                instrVect.push_back("     ");
+                i++;
+            }
+        }
+        
+        instrVect.push_back("BEQ");
+        instrVect.push_back("IF   ");
+        instrVect.push_back("ID   ");
+        instrVect.push_back("EX   ");
+        
+        for(int j = 0; j < prev.size(); j++){
+            if(prev[j] == "STALL"){
+                if(j > i){
+                    instrVect.insert(instrVect.begin() + j,"STALL");
+                }
+            }
+            if(prev[j] == "MEM  "){
+                if(prev[k] == "L.D" || prev[k] == "LW" || prev[k] == "S.D" || prev[k] == "SW"){
+                    if(j > i){
+                        instrVect.insert(instrVect.begin() + j,"STALL");
+                    }
+                }
+            }
+        }
+        
+        pipelineVect.push_back(instrVect);
         return BranchEqual(s, t, parsedInstrArr.size(), branch); // gets new index to start at   
     }
     else if(instr.at(0) == "BNE"){
@@ -518,28 +975,92 @@ int Pipeline::GetFunction(vector<string> instr){
         // gets values from regs
         int s = intReg[si];
         int t = intReg[ti];
+        
+        // alignment
+        if(!pipelineVect.empty()){
+            prev = pipelineVect.back();
+            k = StartPipeline(prev);
+            while(prev[i] != "ID   "){
+                instrVect.push_back("     ");
+                i++;
+            }
+        }
+        
+        instrVect.push_back("BNE");
+        instrVect.push_back("IF   ");
+        instrVect.push_back("ID   ");
+        instrVect.push_back("EX   ");
+        
+        for(int j = 0; j < prev.size(); j++){
+            if(prev[j] == "STALL"){
+                if(j > i){
+                    instrVect.insert(instrVect.begin() + j,"STALL");
+                }
+            }
+            if(prev[j] == "MEM "){
+                if(prev[k] == "L.D" || prev[k] == "LW" || prev[k] == "S.D" || prev[k] == "SW"){
+                    if(j > i){
+                        instrVect.insert(instrVect.begin() + j,"STALL");
+                    }
+                }
+            }
+        }
+        
+        pipelineVect.push_back(instrVect);
         return BranchNotEqual(s, t, parsedInstrArr.size(), branch); // gets new index to start at
     }
     else if(instr.at(0) == "J"){
         string branch = instr.at(1); // gets branch name
+        
+        // alignment
+        if(!pipelineVect.empty()){
+            prev = pipelineVect.back();
+            k = StartPipeline(prev);
+            while(prev[i] != "ID   "){
+                instrVect.push_back("     ");
+                i++;
+            }
+        }
+        
+        instrVect.push_back("J");
+        instrVect.push_back("IF   ");
+        instrVect.push_back("ID   ");
+        instrVect.push_back("EX   ");
+        
+        for(int j = 0; j < prev.size(); j++){
+            if(prev[j] == "STALL"){
+                if(j > i){
+                    instrVect.insert(instrVect.begin() + j,"STALL");
+                }
+            }
+            if(prev[j] == "MEM  "){
+                if(prev[k] == "L.D" || prev[k] == "LW" || prev[k] == "S.D" || prev[k] == "SW"){
+                    if(j > i){
+                        instrVect.insert(instrVect.begin() + j,"STALL");
+                    }
+                    
+                }
+            }
+        }
+        
+        pipelineVect.push_back(instrVect);
         return Jump(parsedInstrArr.size(), branch); // gets new index to start at
     }
 
     throw "Instruction does not exist!";
 }
 
+int Pipeline::StartPipeline(vector<string> instr){
+    /*
+    Desc: finds where the pipeline starts
+    Param: vector<string> instr - the vector with the different states
+    Output: the index of where the pipeline starts
+    */
+    int i = 0;
+    while(instr[i] == "     "){
+        i++;
+    }
+    return i;
+}
 
 
-
-
-/*
-
--1 = just continue
--2 = branch DNE
--3 = instruction DNE
--5 = hit
--10 = miss
-
-
-
-*/

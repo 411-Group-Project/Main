@@ -1,15 +1,4 @@
 #include "instructions.h"
-/*
-NOTE TO SELF
-
-You want to only pass in the source and target into the function
-and return the operated value because you have to check cache for 
-diffrent values first, rather than just easily pull from a certain
-register.
-
-if the conditions return -1, the condition failed
-
-*/
 
 float FPAdd(float source, float target){
     /*

@@ -30,6 +30,7 @@ typedef enum dataType{INT,FP} dataType_t;
 enum functOutVals{CONT=-1,HIT=-2, MISS=-3};
 
 extern vector<vector<string> > parsedInstrArr;
+extern vector<vector<string> > pipelineVect;
 extern Array_t cache[CACHE_DIM];
 extern Array_t mainMem[MEM_LOC];
 extern int intReg[REG_SIZE];
@@ -61,9 +62,7 @@ struct Array_t {
 int FileSize(string file);
 void ReadFile(int numLine, string file, string* instrArr);
 void ParseInstr(string* instrArr, int arrSize);
-//vector<string> split (string s, string delimiter);
 vector<string> Split(string& instr);
-//void RemoveColon(string& instr);
 int* GetOffset(vector<string> instr, int offsetArray[]);
 void OffsetArray(string offsetString, int offsetArr[]);
 int GetRegLoc(string reg);
