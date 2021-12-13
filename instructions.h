@@ -7,6 +7,8 @@
 #include <stdlib.h>
 using namespace std;
 
+#include "file_conversions.h"
+
 float FPAdd(float source, float target); 
 float FPSub(float source, float target); 
 int IntAdd(int source, int target);

@@ -1,15 +1,13 @@
 #include "instructions.h"
-#include "file_conversions.h"
 /*
 NOTE TO SELF
 
 You want to only pass in the source and target into the function
 and return the operated value because you have to check cache for 
-diffrent values first, rather than just eailsy pull from a certain
+diffrent values first, rather than just easily pull from a certain
 register.
 
 if the conditions return -1, the condition failed
-if the condition return -2, throw exception
 
 */
 
@@ -58,7 +56,7 @@ float FPMult(float source, float target){
     */
    return source * target;
 }
-float FPDiv(int source, int target){
+float FPDiv(float source, float target){
     /*
     Desc: does floating point division
     Param: float source - number to divide from
@@ -83,7 +81,8 @@ void FPStore(int dest, float source){
            float source - the number to store
     Output: none
     */
-   fpReg[dest] = source;
+   mainMem[dest].datatype = FP;
+   mainMem[dest].regData.floatPt.data_fp = source;
 }
 void IntLoad(int dest, int source){
     /*
@@ -101,7 +100,8 @@ void IntStore(int dest, int source){
            int source - the number to store
     Output: none
     */
-   intReg[dest] = source;
+   mainMem[dest].datatype = INT;
+   mainMem[dest].regData.integer.data_int = source;
 }
 int BranchEqual(int source, int target, int size, string branch){
     /*
@@ -118,10 +118,10 @@ int BranchEqual(int source, int target, int size, string branch){
                 return i; // return index
             }
         }
-        return -2; // branch does not exist
+        throw "Branch label does not exist!";
     }
 
-    return -1; // continue
+    return CONT; // continue
 }
 int BranchNotEqual(int source, int target, int size, string branch){
     /*
@@ -138,10 +138,10 @@ int BranchNotEqual(int source, int target, int size, string branch){
                 return i; // returns index
             }
         }
-        return -2; // branch doesn't exist
+        throw "Branch label does not exist!";
     }
     
-    return -1; // continue 
+    return CONT; // continue 
 }
 int Jump(int size, string branch){
     /*
@@ -156,5 +156,5 @@ int Jump(int size, string branch){
             return i; // returns index
         }
     }
-    return -2; // branch doesn't exist
+    throw "Branch label does not exist!";
 }
