@@ -2,6 +2,7 @@
 //extern vector<string>* arr2; //use it when it needed later
 
 vector<vector<string> > parsedInstrArr;
+vector<vector<string> > pipelineVect;
 Array_t cache[CACHE_DIM];
 Array_t mainMem[MEM_LOC];
 int intReg[REG_SIZE];
@@ -39,6 +40,35 @@ int main(int argc, char *argv[]){
             }
         }
     }
+
+    vector<vector<string> > newPipelineVector;
+    for (int i = 0; i < pipelineVect.size(); i++){
+        int startPos;
+        vector<string> j = pipelineVect[i];
+        startPos = pip.StartPipeline(j);
+        j.erase(j.begin() + startPos);
+        
+        int temp = i;
+        while(temp > 0){
+            j.erase(j.begin());
+            temp--;
+        }
+        newPipelineVector.push_back(j);
+    }
+     
+
+    for (int i = 0; i < newPipelineVector.size(); i++){
+        cout << "[ ";
+
+        for (auto j : newPipelineVector[i]){
+            cout << j << " ";
+        }    
+        cout << "]" << endl;
+    }
+
+
+    
+
     delete []arr;
     return 0;
 }
