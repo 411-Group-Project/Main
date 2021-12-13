@@ -11,6 +11,7 @@ using namespace std;
 // cycles for instructions
 const int INT_UNIT = 1;
 const int FP_ADDER = 2;
+const int FP_SUB = -2;
 const int FP_MULT = 10;
 const int FP_DIV = 40;
 
@@ -27,13 +28,14 @@ const string INT_UNIT_INSTR[11] = {"L.D", "S.D", "LI", "LW", "SW",
 
 typedef struct Array_t Array_t;
 typedef enum dataType{INT,FP} dataType_t;
-enum functOutVals{CONT=-1,HIT=-2, MISS=-3};
+enum functOutVals{CONT=1,HIT=1, MISS=3};
 
 extern vector<vector<string> > parsedInstrArr;
+extern vector<string> original; //store 
 extern Array_t cache[CACHE_DIM];
 extern Array_t mainMem[MEM_LOC];
 extern int intReg[REG_SIZE];
-extern float fpReg[REG_SIZE];
+extern float fpReg[REG_SIZE] = {0};
 
 typedef struct Integer{
     int index;

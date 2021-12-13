@@ -272,7 +272,7 @@ int Pipeline::GetFunction(vector<string> instr){
         float t = fpReg[ti];
         
         fpReg[di] = FPAdd(s, t); // adds/stores values in dest reg
-        return CONT;
+        return FP_ADDER;
     }
     else if(instr.at(0) == "SUB.D"){
         // finds the index of the FP regs to get values from
@@ -285,7 +285,7 @@ int Pipeline::GetFunction(vector<string> instr){
         float t = fpReg[ti];
         
         fpReg[di] = FPSub(s, t); // fp subtraction
-        return CONT;
+        return FP_SUB;
     }
     else if(instr.at(0) == "MUL.D"){
         // finds the index of the FP regs to get values from
@@ -298,7 +298,7 @@ int Pipeline::GetFunction(vector<string> instr){
         float t = fpReg[ti];
         
         fpReg[di] = FPMult(s, t); // fp multiplication
-        return CONT;
+        return FP_MULT;
     }
     else if(instr.at(0) == "DIV.D"){
         // finds the index of the FP regs to get values from
@@ -311,7 +311,7 @@ int Pipeline::GetFunction(vector<string> instr){
         float t = fpReg[ti];
         
         fpReg[di] = FPDiv(s, t); // fp division
-        return CONT;
+        return FP_DIV;
     }
     else if(instr.at(0) == "L.D"){
         int offsetVals[3]; // offset values
@@ -384,10 +384,12 @@ int Pipeline::GetFunction(vector<string> instr){
         int di = GetRegLoc(instr.at(1)); // dest index for reg to load into
         int s = atoi(instr.at(2).c_str()); // the immediate value to store
         IntLoad(di, s);
+        /*
         if(SearchCache(s)){
             return HIT;
         }
-        return MISS;
+        return MISS;*/
+        return CONT;
     }
     else if(instr.at(0) == "LW"){
         int offsetVals[3]; // holds offset value
