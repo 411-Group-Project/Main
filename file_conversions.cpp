@@ -170,10 +170,10 @@ int GetRegLoc(string reg){
 void SetMemory(){
 
     // set up int and fp regs
-    for(int i = 0; i < REG_SIZE; i++){
-        intReg[i] = 0;
-        fpReg[i] = 0;
-    }
+   for(int i = 0; i < REG_SIZE; i++){
+       intReg[i] = 0;
+       fpReg[i] = 0;
+   }
     
     // initializes the cache
     for(int i = 0; i < CACHE_DIM; i++){

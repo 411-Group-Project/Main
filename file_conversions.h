@@ -35,7 +35,7 @@ extern vector<string> original; //store
 extern Array_t cache[CACHE_DIM];
 extern Array_t mainMem[MEM_LOC];
 extern int intReg[REG_SIZE];
-extern float fpReg[REG_SIZE] = {0};
+extern float fpReg[REG_SIZE];
 
 typedef struct Integer{
     int index;

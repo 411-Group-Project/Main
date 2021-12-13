@@ -5,7 +5,7 @@ vector<vector<string> > parsedInstrArr;
 Array_t cache[CACHE_DIM];
 Array_t mainMem[MEM_LOC];
 int intReg[REG_SIZE];
-float fpReg[REG_SIZE];
+//float fpReg[REG_SIZE];
 int main(int argc, char *argv[]){
 
     string file;
