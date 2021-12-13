@@ -61,7 +61,7 @@ void ParseInstr(string* instrArr, int arrSize){
     //vector<string> *parsedInstrArr = new vector<string>(arrSize);
 
     //I used 2-D vector instead because the size of parsedInstrArr is unknown
-    vector<vector<string>> parsedInstrArr;
+    //vector<vector<string> > parsedInstrArr; // made it global variable
     for(int i = 0; i < arrSize; i++){ // size of array for each instruction
        parsedInstrArr.push_back(Split(instrArr[i])); 
        // RemoveColon(instrArr[i]);
@@ -69,12 +69,13 @@ void ParseInstr(string* instrArr, int arrSize){
 
     }
     //this is for testing to see if parsedInstrArr contains correct values
-    cout <<"vector: "<<endl;
-    for (unsigned int i = 0; i < parsedInstrArr.size(); i++) {
-        for(unsigned int j = 0; j < parsedInstrArr[i].size(); j++){
-            cout <<parsedInstrArr[i][j] << endl;
-        }
-        cout << endl;
+    
+    for (int i = 0; i < parsedInstrArr.size(); i++){
+        cout << "Index: " << i << " Vector: <";
+        for (auto j : parsedInstrArr[i]){
+            cout << j << " ";
+        }    
+        cout << ">" << endl;
     }
 }
 
@@ -118,7 +119,12 @@ vector<string> Split(string& instr){
 
     for(int i = 0; i < instr.size(); i++){ // goes through each index of string
         if(instr[i] == ','){
-            instr.erase(instr.begin() + i); // deletes comma
+            if(instr[i+1] != ' '){
+                instr[i] = ' ';
+            }
+            else{
+                instr.erase(instr.begin() + i); // deletes comma
+            }
         }
         if (instr[i] == ':'){
             instr.erase(instr.begin() + i); // deletes colon
@@ -208,3 +214,45 @@ int GetRegLoc(string reg){
 
    return atoi(reg.substr(1).c_str());
 }
+
+void SetMemory(){
+
+    // set up int and fp regs
+    for(int i = 0; i < REG_SIZE; i++){
+        intReg[i] = 0;
+        fpReg[i] = 0;
+    }
+    
+    // initializes the cache
+    for(int i = 0; i < CACHE_DIM; i++){
+        cache[i].datatype = INT;
+        cache[i].regData.integer.index = -1;
+        cache[i].regData.integer.data_int = -1;
+    }
+
+    // initializes main memory
+    for(int i = 0; i < MEM_LOC; i++){
+        mainMem[i].datatype = INT;
+        mainMem[i].regData.integer.index = i;
+    }
+    mainMem[0].regData.integer.data_int = 45;
+    mainMem[1].regData.integer.data_int = 12;
+    mainMem[2].regData.integer.data_int = 0;
+    mainMem[3].regData.integer.data_int = 92;
+    mainMem[4].regData.integer.data_int = 10;
+    mainMem[5].regData.integer.data_int = 135;
+    mainMem[6].regData.integer.data_int = 254;
+    mainMem[7].regData.integer.data_int = 127;
+    mainMem[8].regData.integer.data_int = 18;
+    mainMem[9].regData.integer.data_int = 4;
+    mainMem[10].regData.integer.data_int = 55;
+    mainMem[11].regData.integer.data_int = 8;
+    mainMem[12].regData.integer.data_int = 2;
+    mainMem[13].regData.integer.data_int = 98;
+    mainMem[14].regData.integer.data_int = 13;
+    mainMem[15].regData.integer.data_int = 5;
+    mainMem[16].regData.integer.data_int = 233;
+    mainMem[17].regData.integer.data_int = 158;
+    mainMem[18].regData.integer.data_int = 167;
+}
+
