@@ -69,12 +69,13 @@ void ParseInstr(string* instrArr, int arrSize){
 
     }
     //this is for testing to see if parsedInstrArr contains correct values
-    cout <<"vector: "<<endl;
-    for (unsigned int i = 0; i < parsedInstrArr.size(); i++) {
-        for(unsigned int j = 0; j < parsedInstrArr[i].size(); j++){
-            cout <<parsedInstrArr[i][j] << endl;
-        }
-        cout << endl;
+    
+    for (int i = 0; i < parsedInstrArr.size(); i++){
+        cout << "Index: " << i << " Vector: <";
+        for (auto j : parsedInstrArr[i]){
+            cout << j << " ";
+        }    
+        cout << ">" << endl;
     }
 }
 
@@ -118,7 +119,12 @@ vector<string> Split(string& instr){
 
     for(int i = 0; i < instr.size(); i++){ // goes through each index of string
         if(instr[i] == ','){
-            instr.erase(instr.begin() + i); // deletes comma
+            if(instr[i+1] != ' '){
+                instr[i] = ' ';
+            }
+            else{
+                instr.erase(instr.begin() + i); // deletes comma
+            }
         }
         if (instr[i] == ':'){
             instr.erase(instr.begin() + i); // deletes colon

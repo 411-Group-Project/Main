@@ -257,9 +257,7 @@ int Pipeline::GetFunction(vector<string> instr){
     /*
     Desc: calls the different functions depending on instruction
     Param: vector<string> instr - instruction to be executed
-           int& index - the index of where the current intsruction is in 
-           vector of vector
-    Output: none
+    Output: number correspoing to index, hit, miss, or continue 
     */
     if(instr.at(0) == "ADD.D"){
         // finds the index of the FP regs to get values from
@@ -345,6 +343,7 @@ int Pipeline::GetFunction(vector<string> instr){
         }
         
         FPLoad(di, data);
+        // Search for hit/miss then loads cachie
         if(SearchCache(data)){
             return HIT;
         }
@@ -374,6 +373,8 @@ int Pipeline::GetFunction(vector<string> instr){
         offset = offset%MEM_LOC; // index for main mem
         
         FPStore(offset, s);
+
+        // Search for hit/miss then loads cache
         if(SearchCache(s)){
             return HIT;
         }
@@ -384,10 +385,7 @@ int Pipeline::GetFunction(vector<string> instr){
         int di = GetRegLoc(instr.at(1)); // dest index for reg to load into
         int s = atoi(instr.at(2).c_str()); // the immediate value to store
         IntLoad(di, s);
-        if(SearchCache(s)){
-            return HIT;
-        }
-        return MISS;
+        return CONT;
     }
     else if(instr.at(0) == "LW"){
         int offsetVals[3]; // holds offset value
@@ -421,6 +419,8 @@ int Pipeline::GetFunction(vector<string> instr){
         }
 
         IntLoad(di, data);
+
+        // Search for hit/miss then loads cache
         if(SearchCache(data)){
             return HIT;
         }
@@ -452,6 +452,8 @@ int Pipeline::GetFunction(vector<string> instr){
         offset = offset%MEM_LOC; // get index for mainMem address
         
         IntStore(offset, s);
+
+        // Search for hit/miss then loads cache
         if(SearchCache(s)){
             return HIT;
         }
