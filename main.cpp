@@ -13,7 +13,7 @@ int main(int argc, char *argv[]){
         file = argv[1];
     }
     else{
-        file = "input.txt";
+        file = "input2.txt";
     }
     int numLines = FileSize(file);
     string *arr = new string[numLines]; 
@@ -26,6 +26,7 @@ int main(int argc, char *argv[]){
     for(int i = 0; i < parsedInstrArr.size(); i++){
         if(parsedInstrArr.at(i).size() > 1){ // makes sure labels are executed
             try{
+                cout << "At index " << i << endl;
                 newIndex = pip.GetFunction(parsedInstrArr.at(i));
             }catch(const char* error){
                 cout << error << endl;
