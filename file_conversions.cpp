@@ -39,9 +39,6 @@ void ReadFile(int numLine, string file, string* instrArr){
             instrArr[i] = line;
             i++;
         }
-        for (int i = 0; i < numLine; i++){
-            cout << instrArr[i]<<endl;
-        }
         myfile.close();
     }
     else{ 
@@ -57,12 +54,12 @@ void ParseInstr(string* instrArr, int arrSize){
            vector<string>** parsedInstrArr - array of vectors
     Output: none
     */
+   
     for(int i = 0; i < arrSize; i++){ // size of array for each instruction
        parsedInstrArr.push_back(Split(instrArr[i])); 
-    }
-    
-}
 
+    }
+}
 
 vector<string> Split(string& instr){
     /*
@@ -168,10 +165,10 @@ void SetMemory(){
     */
 
     // set up int and fp regs
-    for(int i = 0; i < REG_SIZE; i++){
-        intReg[i] = 0;
-        fpReg[i] = 0;
-    }
+   for(int i = 0; i < REG_SIZE; i++){
+       intReg[i] = 0;
+       fpReg[i] = 0;
+   }
     
     // initializes the cache
     for(int i = 0; i < CACHE_DIM; i++){

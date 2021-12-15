@@ -1,4 +1,4 @@
-#include "pipeline.h"
+#include "pipeline_output.h"
 //extern vector<string>* arr2; //use it when it needed later
 
 vector<vector<string> > parsedInstrArr;
@@ -6,7 +6,8 @@ vector<vector<string> > pipelineVect;
 Array_t cache[CACHE_DIM];
 Array_t mainMem[MEM_LOC];
 int intReg[REG_SIZE];
-float fpReg[REG_SIZE];
+vector<string> original; 
+//float fpReg[REG_SIZE];
 int main(int argc, char *argv[]){
 
     string file;
@@ -20,10 +21,42 @@ int main(int argc, char *argv[]){
     // get everything from the files and set up memory
     int numLines = FileSize(file);
     string *arr = new string[numLines]; 
-    ReadFile(numLines, file, arr);
-    ParseInstr(arr, numLines);
-    SetMemory();
+    ReadFile(numLines, file, arr); //Read file
+    ParseInstr(arr, numLines); //Start to parsing instruction
+    SetMemory(); //Set the Memory
 
+<<<<<<< HEAD
+    Action(arr, numLines); //Call Action to start piplining
+    Display(); //Display the result and read it in an exel file name result.csv
+
+    // print integer registers
+    cout << "\nInteger Register" << endl;
+    cout << "| ";
+    for(int i = 0; i < REG_SIZE; i++){
+        cout << i << ": " << intReg[i] <<  " | "; 
+    }
+
+    // print float register
+    cout << "\n\nFloating Point Register" << endl;
+    cout << "| ";
+    for(int i = 0; i < REG_SIZE; i++){
+        cout << i << ": " << fpReg[i] <<  " | "; 
+    }
+
+    // print main memory
+    cout << "\n\nMain Memory" << endl;
+    cout << "| ";
+    for(int i = 0; i < MEM_LOC; i++){
+        if(mainMem[i].datatype == FP){
+            cout << i << ": " << mainMem[i].regData.floatPt.data_fp <<  " | "; 
+        }
+        else{
+            cout << i << ": " << mainMem[i].regData.integer.data_int <<  " | "; 
+        }
+    }
+    
+    delete []arr; 
+=======
     // start pipeline
     Pipeline pip;
     int newIndex;
@@ -99,5 +132,6 @@ int main(int argc, char *argv[]){
     }
 
     delete []arr;
+>>>>>>> main
     return 0;
 }
