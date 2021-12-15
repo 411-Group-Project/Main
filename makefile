@@ -18,8 +18,11 @@ instructions.o: instructions.h instructions.cpp
 pipeline.o: pipeline.h pipeline.cpp
 	$(CXX) $(CXXFLAGS) -c pipeline.cpp
 
-proj: file_conversions.o instructions.o pipeline.o main.o
-	$(CXX) $(CXXFLAGS) main.o file_conversions.o instructions.o pipeline.o -o proj
+pipeline_output.o: pipeline_output.h pipeline_output.cpp
+	$(CXX) $(CXXFLAGS) -c pipeline_output.cpp
+
+proj: file_conversions.o instructions.o pipeline.o main.o pipeline_output.o
+	$(CXX) $(CXXFLAGS) main.o file_conversions.o instructions.o pipeline.o pipeline_output.o -o proj
 
 gdb:
 	gdb ./proj
