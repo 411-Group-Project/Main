@@ -1,3 +1,4 @@
+//Author: Nhu Tran and Chelece Clark
 #ifndef PIPELINE_OUTPUT_H
 #define PIPELINE_OUTPUT_H
 #include "pipeline.h"

@@ -1,3 +1,4 @@
+//Author: Nhu Tran and Chelece Clark
 #ifndef PIPELINE_H
 #define PIPELINE_H
 

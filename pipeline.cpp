@@ -1,3 +1,4 @@
+//Author: Nhu Tran and Chelece Clark
 #include "pipeline.h"
 
 bool Pipeline::SearchCache(int data){

@@ -1,3 +1,4 @@
+//Author: Nhu Tran and Chelece Clark
 #ifndef INSTRUCTIONS_H
 #define INSTRUCTIONS_H
 #include <iostream>

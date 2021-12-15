@@ -1,3 +1,4 @@
+//Author: Nhu Tran and Chelece Clark
 #include "file_conversions.h"
 
 int FileSize(string file){

@@ -1,3 +1,4 @@
+//Author: Nhu Tran and Chelece Clark
 #ifndef STRING_CONV_H
 #define STRING_CONV_H
 #include <iostream>

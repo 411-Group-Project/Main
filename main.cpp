@@ -1,3 +1,4 @@
+//Author: Nhu Tran and Chelece Clark
 #include "pipeline_output.h"
 
 vector<vector<string> > parsedInstrArr;

@@ -1,3 +1,4 @@
+//Author: Nhu Tran and Chelece Clark
 #include "instructions.h"
 float fpReg[REG_SIZE]; //tell the compiler that fpReg is defined here
 /*
