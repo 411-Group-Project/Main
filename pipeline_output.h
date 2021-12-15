@@ -5,5 +5,4 @@
 #include <iomanip>
 void Action(string * , int size);
 void Display();
-void Excel();
 #endif

@@ -1,5 +1,5 @@
 #include "instructions.h"
-float fpReg[REG_SIZE];
+float fpReg[REG_SIZE]; //tell the compiler that fpReg is defined here
 /*
 NOTE TO SELF
 
@@ -133,8 +133,6 @@ int BranchNotEqual(int source, int target, int size, string branch){
            string branch - the branch to go to if condition is met
     Output: index of the branch or loop instruction or -1 if not found
     */
-  cout<<"\nin branchnot equal"<<endl;
-  cout<<source<<" "<<target<<" "<<size<<" "<<branch<<endl;
     if(source != target){ // values not equal, instruction satisfied
         for(int i = 0; i < size; i++){
             if(parsedInstrArr[i].at(0) == branch){ // finds branch to go to

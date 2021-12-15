@@ -484,7 +484,6 @@ int Pipeline::GetFunction(vector<string> instr){
         int s = intReg[si]; // gets value from reg
 
         intReg[di] = IntAdd(s, t);
-        cout<<"di: "<<di<<" value: "<<intReg[di]<<endl;
         return CONT;
     }
     else if(instr.at(0) == "SUB"){
@@ -517,7 +516,7 @@ int Pipeline::GetFunction(vector<string> instr){
         int si = GetRegLoc(instr.at(1));
         int ti = GetRegLoc(instr.at(2));
         string branch = instr.at(3); // gets branch name
-        cout<<"\nAt BNE"<<endl;
+
         // gets values from regs
         int s = intReg[si];
         int t = intReg[ti];
@@ -531,21 +530,7 @@ int Pipeline::GetFunction(vector<string> instr){
     else{
         return -100; //usually instruction indicate Loop
     }
-   // throw "Instruction does not exist!";
 }
 
 
 
-
-
-/*
-
--1 = just continue
--2 = branch DNE
--3 = instruction DNE
--5 = hit
--10 = miss
-
-
-
-*/

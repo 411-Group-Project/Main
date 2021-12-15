@@ -37,11 +37,7 @@ void ReadFile(int numLine, string file, string* instrArr){
     if (myfile.is_open()){
         while(getline (myfile,line)){ // reads line from file
             instrArr[i] = line;
-            //original.push_back(line); //store the original data
             i++;
-        }
-        for (int i = 0; i < numLine; i++){
-            cout << instrArr[i]<<endl;
         }
         myfile.close();
     }
@@ -59,24 +55,9 @@ void ParseInstr(string* instrArr, int arrSize){
     Output: none
     */
    
-    //vector<string> *parsedInstrArr = new vector<string>(arrSize);
-
-    //I used 2-D vector instead because the size of parsedInstrArr is unknown
-    //vector<vector<string> > parsedInstrArr; // made it global variable
     for(int i = 0; i < arrSize; i++){ // size of array for each instruction
        parsedInstrArr.push_back(Split(instrArr[i])); 
-       // RemoveColon(instrArr[i]);
-       // parsedInstrArr[i] = split(instrArr[i], " "); // stores vector and index i of array
 
-    }
-    //this is for testing to see if parsedInstrArr contains correct values
-    
-    for (int i = 0; i < parsedInstrArr.size(); i++){
-        cout << "Index: " << i << " Vector: <";
-        for (auto j : parsedInstrArr[i]){
-            cout << j << " ";
-        }    
-        cout << ">" << endl;
     }
 }
 

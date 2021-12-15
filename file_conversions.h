@@ -11,7 +11,6 @@ using namespace std;
 // cycles for instructions
 const int INT_UNIT = -1;
 const int FP_ADDER = -2;
-//const int FP_SUB = -2;
 const int FP_MULT = -10;
 const int FP_DIV = -40;
 
@@ -64,9 +63,7 @@ struct Array_t {
 int FileSize(string file);
 void ReadFile(int numLine, string file, string* instrArr);
 void ParseInstr(string* instrArr, int arrSize);
-//vector<string> split (string s, string delimiter);
 vector<string> Split(string& instr);
-//void RemoveColon(string& instr);
 int* GetOffset(vector<string> instr, int offsetArray[]);
 void OffsetArray(string offsetString, int offsetArr[]);
 int GetRegLoc(string reg);

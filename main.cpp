@@ -18,34 +18,39 @@ int main(int argc, char *argv[]){
     }
     int numLines = FileSize(file);
     string *arr = new string[numLines]; 
-    ReadFile(numLines, file, arr);
-    ParseInstr(arr, numLines);
-    SetMemory();
-    for (int i = 0; i < numLines; i++){
-        original.push_back(arr[i]);
+    ReadFile(numLines, file, arr); //Read file
+    ParseInstr(arr, numLines); //Start to parsing instruction
+    SetMemory(); //Set the Memory
+
+    Action(arr, numLines); //Call Action to start piplining
+    Display(); //Display the result and read it in an exel file name result.csv
+
+    // print integer registers
+    cout << "\nInteger Register" << endl;
+    cout << "| ";
+    for(int i = 0; i < REG_SIZE; i++){
+        cout << i << ": " << intReg[i] <<  " | "; 
     }
-    /*
-    Pipeline pip;
-    int newIndex;
-    for(int i = 0; i < parsedInstrArr.size(); i++){
-        if(parsedInstrArr.at(i).size() > 1){ // makes sure labels are executed
-            try{
-                cout << "At index " << i << endl;
-                newIndex = pip.GetFunction(parsedInstrArr.at(i));
-            }catch(const char* error){
-                cout << error << endl;
-            }
-            if(newIndex > CONT){ //condition or jump needs to happen
-                i = newIndex;
-            }
-            else if(newIndex == MISS){
-                cout << "Add some stalls" << endl;
-            }
+
+    // print float register
+    cout << "\n\nFloating Point Register" << endl;
+    cout << "| ";
+    for(int i = 0; i < REG_SIZE; i++){
+        cout << i << ": " << fpReg[i] <<  " | "; 
+    }
+
+    // print main memory
+    cout << "\n\nMain Memory" << endl;
+    cout << "| ";
+    for(int i = 0; i < MEM_LOC; i++){
+        if(mainMem[i].datatype == FP){
+            cout << i << ": " << mainMem[i].regData.floatPt.data_fp <<  " | "; 
         }
-    }*/
-    Action(arr, numLines);
-    Display();
-    //Excel();
-    delete []arr;
+        else{
+            cout << i << ": " << mainMem[i].regData.integer.data_int <<  " | "; 
+        }
+    }
+    
+    delete []arr; 
     return 0;
 }
