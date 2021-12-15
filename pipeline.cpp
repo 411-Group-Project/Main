@@ -259,6 +259,7 @@ int Pipeline::GetFunction(vector<string> instr){
     Param: vector<string> instr - instruction to be executed
     Output: number correspoing to index, hit, miss, or continue 
     */
+   //cout<<"in GetFunction"<<endl;
     if(instr.at(0) == "ADD.D"){
         // finds the index of the FP regs to get values from
         int di = GetRegLoc(instr.at(1));
@@ -283,7 +284,7 @@ int Pipeline::GetFunction(vector<string> instr){
         float t = fpReg[ti];
         
         fpReg[di] = FPSub(s, t); // fp subtraction
-        return FP_SUB;
+        return FP_ADDER;
     }
     else if(instr.at(0) == "MUL.D"){
         // finds the index of the FP regs to get values from
@@ -483,6 +484,7 @@ int Pipeline::GetFunction(vector<string> instr){
         int s = intReg[si]; // gets value from reg
 
         intReg[di] = IntAdd(s, t);
+        cout<<"di: "<<di<<" value: "<<intReg[di]<<endl;
         return CONT;
     }
     else if(instr.at(0) == "SUB"){
@@ -511,21 +513,25 @@ int Pipeline::GetFunction(vector<string> instr){
     }
     else if(instr.at(0) == "BNE"){
         // finds the index of the int regs to get values from
+        
         int si = GetRegLoc(instr.at(1));
         int ti = GetRegLoc(instr.at(2));
         string branch = instr.at(3); // gets branch name
-        
+        cout<<"\nAt BNE"<<endl;
         // gets values from regs
         int s = intReg[si];
         int t = intReg[ti];
+        
         return BranchNotEqual(s, t, parsedInstrArr.size(), branch); // gets new index to start at
     }
     else if(instr.at(0) == "J"){
         string branch = instr.at(1); // gets branch name
         return Jump(parsedInstrArr.size(), branch); // gets new index to start at
     }
-
-    throw "Instruction does not exist!";
+    else{
+        return -100; //usually instruction indicate Loop
+    }
+   // throw "Instruction does not exist!";
 }
 
 

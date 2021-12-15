@@ -37,7 +37,7 @@ void ReadFile(int numLine, string file, string* instrArr){
     if (myfile.is_open()){
         while(getline (myfile,line)){ // reads line from file
             instrArr[i] = line;
-            original.push_back(line); //store the original data
+            //original.push_back(line); //store the original data
             i++;
         }
         for (int i = 0; i < numLine; i++){

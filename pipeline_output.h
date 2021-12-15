@@ -1,7 +1,9 @@
 #ifndef PIPELINE_OUTPUT_H
 #define PIPELINE_OUTPUT_H
 #include "pipeline.h"
-
-void Action();
-
+#include <fstream>
+#include <iomanip>
+void Action(string * , int size);
+void Display();
+void Excel();
 #endif

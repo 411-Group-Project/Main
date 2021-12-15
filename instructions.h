@@ -8,7 +8,7 @@
 using namespace std;
 
 #include "file_conversions.h"
-
+//float fpReg[REG_SIZE];
 float FPAdd(float source, float target); 
 float FPSub(float source, float target); 
 int IntAdd(int source, int target);

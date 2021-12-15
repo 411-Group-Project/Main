@@ -5,6 +5,7 @@ vector<vector<string> > parsedInstrArr;
 Array_t cache[CACHE_DIM];
 Array_t mainMem[MEM_LOC];
 int intReg[REG_SIZE];
+vector<string> original; 
 //float fpReg[REG_SIZE];
 int main(int argc, char *argv[]){
 
@@ -20,6 +21,9 @@ int main(int argc, char *argv[]){
     ReadFile(numLines, file, arr);
     ParseInstr(arr, numLines);
     SetMemory();
+    for (int i = 0; i < numLines; i++){
+        original.push_back(arr[i]);
+    }
     /*
     Pipeline pip;
     int newIndex;
@@ -39,7 +43,9 @@ int main(int argc, char *argv[]){
             }
         }
     }*/
-    Action();
+    Action(arr, numLines);
+    Display();
+    //Excel();
     delete []arr;
     return 0;
 }
