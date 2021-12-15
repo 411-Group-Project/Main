@@ -531,6 +531,3 @@ int Pipeline::GetFunction(vector<string> instr){
         return -100; //usually instruction indicate Loop
     }
 }
-
-
-

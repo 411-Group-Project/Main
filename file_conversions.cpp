@@ -99,7 +99,6 @@ vector<string> Split(string& instr){
     return res;
 }
 
-
 int* GetOffset(vector<string> instr, int offsetArray[]){
     /*
     Desc: Finds offset values
@@ -159,6 +158,11 @@ int GetRegLoc(string reg){
 }
 
 void SetMemory(){
+    /*
+    Desc: sets up and initializes memory
+    Param: none
+    Output: none
+    */
 
     // set up int and fp regs
    for(int i = 0; i < REG_SIZE; i++){
